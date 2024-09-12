@@ -1,4 +1,4 @@
 # Ignore environment variables
 .env
 resume.pdf
-env/
+venv/
