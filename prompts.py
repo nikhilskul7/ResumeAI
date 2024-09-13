@@ -50,3 +50,51 @@ resume:{resume}
 I want the response in one single string having the structure
 {{"Keywords:""}}
 """
+
+promptsToGenerateCoverLetter="""
+you are a skilled or very experience ATS(Application Tracking System) like Lever, Greenhouse or Workday with a deep understanding of tech field,software engineering. 
+your task is to create cover letter based on job description and my resume.
+description:{jd}
+resume:{resume}
+Using the job description, my resume and following template create me the best cover letter which is ready to send.
+The cover letter should be highly relevant to job description , it should look like I am perfect match. Change the bullet points to match keywords in job description.
+I want the response in one single string having the structure and all the variables should be filled.
+Ensure that there is no variable which is still a variable without fail.
+Here is template-
+Nikhil Kulkarni,
+[Role],
+[Location]
+
+To,
+Hiring Manager,
+[Company Name],
+[Location],
+[Date],
+
+Subject: Cover Letter for [Position] Role at [Company]
+
+Dear Hiring Manager,
+
+I am writing to express my interest in the [Position] role at [Company Name]. With a Master’s degree in Computer Science, hands-on experience in full-stack development, and a passion for delivering innovative solutions, I am excited about the opportunity to contribute to [Company Name]'s mission and vision.
+
+A bit about my experience ( match them perfectly with job desctiption and it's keywords):
+
+- write 3 points from job description which would make me perfect candidate using points from my resume and changing it ( you can write something fake too.).
+- Change the technologies I have in my resume to match the job description. Make those technical points and have the same keywords from job description.
+- make me look like the perfect candidate. Always write 3 bullet points and point template from the resume. You can fake details about my resume
+
+I am particularly excited about the prospect of joining [Company Name] due to [specific area or value you admire]. Your commitment to [specific industry or mission] really resonates with me, and I am eager to contribute to such a forward-thinking team.
+
+Thank you for considering my application. I look forward to the opportunity to discuss how my skills and experience align with the goals of your team.
+Please let me know if there’s any additional information I can provide. You can reach me at [Email Address].
+
+Best regards,
+
+Nikhil Kulkarni
+[LinkedIn Profile: https://www.linkedin.com/in/nikhil-kulkarni-nk/]
+[Personal Portfolio: https://portfolio-one-gamma-30.vercel.app/]
+
+
+
+
+"""
