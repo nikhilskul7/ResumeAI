@@ -1,4 +1,6 @@
 # Ignore environment variables
 .env
+# have unique resume
 resume.pdf
+# Create
 venv/
