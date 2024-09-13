@@ -91,7 +91,7 @@ edited_content = st.text_area("Preview and Edit Your Cover Letter", st.session_s
 
 if st.button("Save and Download Cover Letter"):
     try:
-        pdf_file = create_pdf_from_text(edited_content)
+        pdf_file = create_pdf_from_text(edited_content, title="Cover Letter Nikhil")
         
         st.download_button(
             label="Download Cover Letter as PDF",
