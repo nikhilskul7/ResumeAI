@@ -3,7 +3,12 @@ import json
 import os
 from dotenv import load_dotenv
 from master_list import master_keywords
-from prompts import promptToGetKeywordsFromMaster, promptToGetAllTheKeyWords,promptToGetImportanceOfKeywords
+from prompts import (
+    promptToGetKeywordsFromMaster,
+    promptToGetAllTheKeyWords,
+    promptToGetImportanceOfKeywords,
+    promptToGetMissingKeyWordsFromResume,
+)
 from utilities import (
     input_pdf_text_static,
     get_gemini_repsonse,
@@ -25,7 +30,7 @@ Analyze = st.button("Analyze")
 
 
 if Analyze:
-    text = input_pdf_text_static(os.getenv("RESUME_PATH"))
+    resume = input_pdf_text_static(os.getenv("RESUME_PATH"))
     promptToGetAllTheKeyWords = promptToGetAllTheKeyWords.format(jd=jobDescription)
     response = get_gemini_repsonse(promptToGetAllTheKeyWords)
     promptToGetKeywordsFromMaster = promptToGetKeywordsFromMaster.format(
@@ -37,11 +42,15 @@ if Analyze:
     formatted_response_all = clean_keywords_response(response)
     formatted_response_master = clean_keywords_response(responseFromMasterList)
 
-    promptToGetImportanceOfKeywords=promptToGetImportanceOfKeywords.format(
-        text=(formatted_response_all+formatted_response_master),jd=jobDescription
+    promptToGetImportanceOfKeywords = promptToGetImportanceOfKeywords.format(
+        text=(formatted_response_all + formatted_response_master), jd=jobDescription
     )
-    responseFromImportance=get_gemini_repsonse(promptToGetImportanceOfKeywords)
-    formatted_response_importance=clean_keywords_response(responseFromImportance)
+    responseFromImportance = get_gemini_repsonse(promptToGetImportanceOfKeywords)
+    formatted_response_importance = clean_keywords_response(responseFromImportance)
+
+    promptToGetMissingKeyWordsFromResume=promptToGetMissingKeyWordsFromResume.format(text=formatted_response_importance,resume=resume)
+    responseofMissingKeywordsFromResume=get_gemini_repsonse(promptToGetMissingKeyWordsFromResume)
+    formatted_response_missing = clean_keywords_response(responseofMissingKeywordsFromResume)
     
     # Change in the app
     st.subheader("ATS Keywords Analysis Result")
@@ -51,3 +60,5 @@ if Analyze:
     st.markdown(formatted_response_master)
     st.markdown("**Important Keywords**")
     st.markdown(formatted_response_importance)
+    st.markdown("**Missing Keywords From Resume**")
+    st.markdown(formatted_response_missing)

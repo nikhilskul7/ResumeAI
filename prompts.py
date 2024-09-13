@@ -39,3 +39,14 @@ description:{jd}
 I want the response in one single string having the structure
 {{"Keywords:""}}
 """
+
+promptToGetMissingKeyWordsFromResume="""
+you are a skilled or very experience ATS(Application Tracking System) like Lever, Greenhouse or Workday with a deep understanding of tech field,software engineering. 
+You are ranking a candidate based on keywords provided.
+Your task as ATS or recruiter is given a list of keywords and resume,
+give me list of missing keywords in the resume by comparing resume and keywords list.
+keywords:{text}
+resume:{resume}
+I want the response in one single string having the structure
+{{"Keywords:""}}
+"""
