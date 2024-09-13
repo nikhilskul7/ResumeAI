@@ -4,3 +4,4 @@
 resume.pdf
 # Create
 venv/
+__pycache__
