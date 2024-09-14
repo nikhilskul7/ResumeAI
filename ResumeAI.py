@@ -10,7 +10,7 @@ from prompts import (
     promptsToGenerateCoverLetter,
     promptToGenerateRelevantPoints,
     promptForShorterCoverLetter,
-    promptForAnyQuestion
+    promptForAnyQuestion,
 )
 from utilities import (
     input_pdf_text_static,
@@ -18,7 +18,6 @@ from utilities import (
     clean_keywords_response,
     create_pdf_from_text,
     clean_points_response,
-    
 )
 from latex import latex_resume
 
@@ -42,7 +41,7 @@ if "questions" not in st.session_state:
     st.session_state.questions = ""
 resume = input_pdf_text_static(os.getenv("RESUME_PATH"))
 if Analyze:
-    
+
     promptToGetAllTheKeyWords = promptToGetAllTheKeyWords.format(jd=jobDescription)
     response = get_gemini_repsonse(promptToGetAllTheKeyWords)
     promptToGetKeywordsFromMaster = promptToGetKeywordsFromMaster.format(
@@ -126,22 +125,26 @@ if st.button("Save and Download Cover Letter"):
         st.error(f"An error occurred while creating the PDF: {str(e)}")
 
 if st.button("Shorten the cover letter"):
-    
-        promptForShorterCoverLetter=promptForShorterCoverLetter.format(cover_letter= st.session_state.cover_letter_content)
-        responseofMessage = get_gemini_repsonse(promptForShorterCoverLetter)
-        print(responseofMessage)
-        st.write(responseofMessage)
+
+    promptForShorterCoverLetter = promptForShorterCoverLetter.format(
+        cover_letter=st.session_state.cover_letter_content
+    )
+    responseofMessage = get_gemini_repsonse(promptForShorterCoverLetter)
+
+    st.write(responseofMessage)
 
 
-questions=st.text_area(
+questions = st.text_area(
     "Any Other Questions Regarding Application",
     st.session_state.questions,
     height=100,
 )
 if st.button("Answer"):
     if questions:
-        question=st.session_state.questions
-        promptForAnyQuestion=promptForAnyQuestion.format(resume=resume,jd=jobDescription)
+        question = st.session_state.questions
+        promptForAnyQuestion = promptForAnyQuestion.format(
+            resume=resume, jd=jobDescription
+        )
         responseofQuestion = get_gemini_repsonse(promptForAnyQuestion)
-        print(responseofQuestion)
+
         st.write(responseofQuestion)
