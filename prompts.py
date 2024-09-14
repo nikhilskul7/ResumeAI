@@ -95,6 +95,55 @@ Nikhil Kulkarni
 [Personal Portfolio: https://portfolio-one-gamma-30.vercel.app/]
 
 
+"""
 
+promptToGenerateRelevantPoints="""
+you are a skilled or very experience resume creator. 
+Your task is to suggest some points for my resume using keywords that I provide.
+
+I want each and every keyword that I give integrated in the bullet points.
+These bullet points should make sense for sure so that if I am asked there should be technical way to explain it.
+You can also suggest some new points but it should include all the keywords.
+I want the keywords in the points that you give me, only provide me with the points that you changed.
+I want ALL of the keywords that I give you to be included in the points at any cost.
+I REPEAT THIS IS NON NEGOTIABLE THAT I WANT ALL THE KEYWORDS IN THE POINTS EXPLICITLY.
+You should  create few  new or fake points too with these keywords.
+The format of these  points should be - Action word - method-technologies- result.
+here goes list of keywords and resume-
+keywords:{keywords}
+I want the response in one single string having the structure seperated by commas. I want 7 points.
+{{"Points:""}}
+"""
+
+
+promptForShorterCoverLetter="""
+you are a skilled or very experience ATS(Application Tracking System) like Lever, Greenhouse or Workday with a deep understanding of tech field,software engineering. 
+Your task is to convert this cover letter into message for hiring manager or recruiter.
+The message should match what job description wants and the required keywords.
+cover_letter={cover_letter}
+I want it in format- 
+Hi [Hiring Manager's Name],
+
+I hope you're doing well. I came across the [Position] opening at [Company],
+ and I'm really excited about the opportunity to contribute my skills in [briefly mention key expertise].
+I have experience in- 
+write 3 points from job description which would make me perfect candidate using points from my resume and changing it ( you can write something fake too.)
+I would love the chance to discuss how I can add value to your team. Please let me know if we can arrange a time to chat.
+
+Best regards,
+I want response in form of single string with proper indentation- 
+
+"""
+
+promptForAnyQuestion="""
+you are a skilled or very experience Recruiter with a deep understanding of tech field,software engineering. 
+Your task is to answer the question with respect to job description and resume.
+You need to answer it in such a way that the recruiter will be impressed.
+The message should match what job description wants and the required keywords and also my experience.
+It shoulf feel like this answer is catered to role and company.
+It should be 5-6 lines long but very nice.
+resume={resume}
+jd={jd}
+I want it in format of single string.
 
 """

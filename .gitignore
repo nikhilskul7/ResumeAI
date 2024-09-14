@@ -5,3 +5,5 @@ resume.pdf
 # Create
 venv/
 __pycache__
+latex_resume.tex
+latex.py
