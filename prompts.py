@@ -1,66 +1,59 @@
+# Prompt to extract keywords from master list
 promptToGetKeywordsFromMaster = """
-Hey, you are a skilled or very experience ATS(Application Tracking System) like Lever, Greenhouse or Workday 
-with a deep understanding of tech field,software engineering. 
- 
-Compare the list of master keywords and tell me which keywords are present in the job description.
+As an advanced ATS with expertise in tech and software engineering, compare the master keyword list to the job description.
+Identify which keywords are present in the description.
 
-master_list:{text}
-description:{jd}
+Master list: {text}
+Job description: {jd}
 
 I want the response in one single string having the structure
 {{"Keywords:""}}
 """
 
-
+# Prompt to extract all keywords from job description
 promptToGetAllTheKeyWords = """
-you are a skilled or very experience ATS(Application Tracking System) like Lever, Greenhouse or Workday with a deep understanding of tech field,software engineering. 
-I need to identify the keywords from the following job description that an Applicant Tracking System (ATS) 
-might use to rank resumes. 
-Please extract and list all relevant keywords and phrases that are likely to be important for the ATS.
-The list of missing keywords should be what the ATS may use to rank this resume higher and be hard skills and technical.
+As an advanced ATS specializing in tech and software engineering, extract all relevant keywords from this job description that might be used to rank resumes.
+ Focus on hard skills and technical terms, sorted by importance.
 
-Here is the job description:
-job description:{jd}
-I want the response in one single string having the structure and keywords should be seperated by commas.
-sort them in order of their importance.
-The keywords should be from job description.
-I want the response in one single string having the structure
-{{"Keywords:""}}
-"""
-
-promptToGetImportanceOfKeywords="""
-you are a skilled or very experience ATS(Application Tracking System) like Lever, Greenhouse or Workday with a deep understanding of tech field,software engineering. 
-You are ranking candidates on the basis of keywords in job description.
-Given a list of keywords and job description, rank these keywords based on their importance and how an
-ATS or recruiter would rank candidates based on these keywords.
-master_list:{text}
-description:{jd}
+Job description: {jd}
 
 I want the response in one single string having the structure
 {{"Keywords:""}}
 """
 
-promptToGetMissingKeyWordsFromResume="""
-you are a skilled or very experience ATS(Application Tracking System) like Lever, Greenhouse or Workday with a deep understanding of tech field,software engineering. 
-You are ranking a candidate based on keywords provided.
-Your task as ATS or recruiter is given a list of keywords and resume,
-give me list of missing keywords in the resume by comparing resume and keywords list.
-keywords:{text}
-resume:{resume}
+# Prompt to rank keywords by importance
+promptToGetImportanceOfKeywords = """
+As an ATS expert in tech and software engineering, rank these keywords based on their 
+importance for candidate evaluation, considering the job description.
+
+Keywords: {text}
+Job description: {jd}
+
 I want the response in one single string having the structure
 {{"Keywords:""}}
 """
 
-promptsToGenerateCoverLetter="""
-you are a skilled or very experience ATS(Application Tracking System) like Lever, Greenhouse or Workday with a deep understanding of tech field,software engineering. 
-your task is to create cover letter based on job description and my resume.
-description:{jd}
-resume:{resume}
-Using the job description, my resume and following template create me the best cover letter which is ready to send.
-The cover letter should be highly relevant to job description , it should look like I am perfect match. Change the bullet points to match keywords in job description.
-I want the response in one single string having the structure and all the variables should be filled.
-Ensure that there is no variable which is still a variable without fail.
-Here is template-
+# Prompt to identify missing keywords in resume
+promptToGetMissingKeyWordsFromResume = """
+As an ATS specialist in tech and software engineering,
+ compare the given keywords to the resume and list the missing keywords.
+
+Keywords: {text}
+Resume: {resume}
+
+I want the response in one single string having the structure
+{{"Keywords:""}}
+"""
+
+# Prompt to generate a cover letter
+promptsToGenerateCoverLetter = """
+Create a tailored cover letter based on the job description and resume. 
+Ensure it highlights relevant experience and aligns closely with the job requirements.
+DO NOT MAKE IT LOOK LIKE AN LLM DID THIS .
+Job description: {jd}
+Resume: {resume}
+
+Use this template, filling in all variables:
 Nikhil Kulkarni,
 [Role],
 [Location]
@@ -94,33 +87,29 @@ Nikhil Kulkarni
 [LinkedIn Profile: https://www.linkedin.com/in/nikhil-kulkarni-nk/]
 [Personal Portfolio: https://portfolio-one-gamma-30.vercel.app/]
 
-
+Response format:
+[Completed cover letter]
 """
 
-promptToGenerateRelevantPoints="""
-you are a skilled or very experience resume creator. 
-Your task is to suggest some points for my resume using keywords that I provide.
+# Prompt to generate relevant resume points
+promptToGenerateRelevantPoints = """
+Create 7 resume bullet points that incorporate all provided keywords. 
+Each point should follow the format: Action word - method - technologies - result. 
+Include some new or enhanced points to fully utilize all keywords.
+DO NOT MAKE IT LOOK LIKE AN LLM DID THIS .
+Keywords: {keywords}
 
-I want each and every keyword that I give integrated in the bullet points.
-These bullet points should make sense for sure so that if I am asked there should be technical way to explain it.
-You can also suggest some new points but it should include all the keywords.
-I want the keywords in the points that you give me, only provide me with the points that you changed.
-I want ALL of the keywords that I give you to be included in the points at any cost.
-I REPEAT THIS IS NON NEGOTIABLE THAT I WANT ALL THE KEYWORDS IN THE POINTS EXPLICITLY.
-You should  create few  new or fake points too with these keywords.
-The format of these  points should be - Action word - method-technologies- result.
-here goes list of keywords and resume-
-keywords:{keywords}
-I want the response in one single string having the structure seperated by commas. I want 7 points.
-{{"Points:""}}
+I want the response in one single string having the structure, I want points seperated by | and no " in them.
+{{"Points:"}}
 """
 
-
-promptForShorterCoverLetter="""
-you are a skilled or very experience ATS(Application Tracking System) like Lever, Greenhouse or Workday with a deep understanding of tech field,software engineering. 
-Your task is to convert this cover letter into message for hiring manager or recruiter.
+# Prompt for shorter cover letter
+promptForShorterCoverLetter = """
+Convert this cover letter into a concise message for the hiring manager, highlighting key skills that match the job requirements.
 The message should match what job description wants and the required keywords.
-cover_letter={cover_letter}
+jd={jd}
+Cover letter: {cover_letter}
+DO NOT MAKE IT LOOK LIKE AN LLM DID THIS .
 I want it in format- 
 Hi [Hiring Manager's Name],
 
@@ -132,30 +121,35 @@ I would love the chance to discuss how I can add value to your team. Please let 
 
 Best regards,
 I want response in form of single string with proper indentation- 
-
 """
 
-promptForAnyQuestion="""
-You are a software engineer eager to apply to this company.
-Answer this question- question={question}.
-It should align with (jd={jd}) and highlights relevant experience from the resume (resume={resume})
+# Prompt for answering interview questions
+promptForAnyQuestion = """
+Answer this interview question as a software engineer applying to the company. 
+Align your response with the job description.
+DO NOT MAKE IT LOOK LIKE AN LLM DID THIS .
+Question: {question}
+Job description: {jd}
 
- The answer should be tailored to the role and company, effectively using the necessary keywords to match the job
-   requirements and my expertise.
-     It should be concise, around 5-6 lines, and directly address the question provided (question={question}) in a way 
-     that impresses the recruiter.
-     The response should be in form of question and answer. I have provided you with a question.
+
+Provide a concise 5-6 line response that impresses the recruiter.
+
+Response format:
+Q: [Question]
+A: [Your tailored answer]
 """
 
-promptForSponsorship="""
-Analyze the job description for the following information:
-jd={jd}
-Explicit Visa Sponsorship Statement: Is there a direct statement in the job description regarding H-1B visa sponsorship (e.g., "We do not sponsor H-1B visas")?
-Implicit Indications: Are there requirements that suggest the company might not sponsor H-1B visas (e.g., requiring U.S. citizenship or permanent residency or security clearence required)?
-If no explicit or implicit information is found:
-Do this everytime-
-Conduct a Web Search: Use online resources like h1bgrader, myvisajobs website to find information about their H-1B sponsorship history or policies.
-Provide a Hyperlink: If relevant information is found, provide a hyperlink to the source for verification.
-The response should be in single string and in form with the hyperlink -
+# Prompt for checking visa sponsorship
+promptForSponsorship = """
+Analyze this job description for H-1B visa sponsorship information:
 
+Job description: {jd}
+
+1. Check for explicit statements about visa sponsorship.
+2. Look for implicit indications (e.g., citizenship requirements).
+3. If no clear information, search online resources like h1bgrader or myvisajobs for the company's sponsorship history.
+4. Provide a summary with a hyperlink to any relevant information found.
+
+Response format:
+[Your analysis  in one line with hyperlink if applicable]
 """

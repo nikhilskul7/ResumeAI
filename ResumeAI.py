@@ -43,14 +43,15 @@ resume = input_pdf_text_static(os.getenv("RESUME_PATH"))
 if Analyze:
 
     promptToGetAllTheKeyWords = promptToGetAllTheKeyWords.format(jd=jobDescription)
-    response = get_gemini_repsonse(promptToGetAllTheKeyWords)
+    responseForAllKeywords = get_gemini_repsonse(promptToGetAllTheKeyWords)
+
     promptToGetKeywordsFromMaster = promptToGetKeywordsFromMaster.format(
         text=master_keywords, jd=jobDescription
     )
     responseFromMasterList = get_gemini_repsonse(promptToGetKeywordsFromMaster)
 
     # Process response from both sources
-    formatted_response_all = clean_keywords_response(response)
+    formatted_response_all = clean_keywords_response(responseForAllKeywords)
     formatted_response_master = clean_keywords_response(responseFromMasterList)
 
     promptToGetImportanceOfKeywords = promptToGetImportanceOfKeywords.format(
@@ -73,6 +74,7 @@ if Analyze:
     )
     responseofRelevantPoints = get_gemini_repsonse(promptToGenerateRelevantPoints)
     formatted_response_points = clean_points_response(responseofRelevantPoints)
+
     promptForSponsorship=promptForSponsorship.format(jd=jobDescription)
     responseForSponsor=get_gemini_repsonse(promptForSponsorship)
     
@@ -131,7 +133,7 @@ if st.button("Save and Download Cover Letter"):
 if st.button("Shorten the cover letter"):
 
     promptForShorterCoverLetter = promptForShorterCoverLetter.format(
-        cover_letter=st.session_state.cover_letter_content
+        cover_letter=st.session_state.cover_letter_content,jd=jobDescription
     )
     responseofMessage = get_gemini_repsonse(promptForShorterCoverLetter)
 
@@ -151,7 +153,7 @@ if st.button("Answer"):
         question = st.session_state.questions
 
         promptForAnyQuestion = promptForAnyQuestion.format(
-            resume=resume, jd=jobDescription, question=question
+             jd=jobDescription, question=question
         )
         responseofQuestion = get_gemini_repsonse(promptForAnyQuestion)
 

@@ -71,29 +71,20 @@ def clean_keywords_response(response_text):
     except Exception as e:
         return f"An error occurred: {str(e)}"
 
-
 def clean_points_response(response_text):
     try:
-        # print("Received response_text:", response_text)  # Print the entire response_text
-
-        # Parse the JSON-like string
-        response_text = response_text.replace("“", '"').replace(
-            "”", '"'
-        )  # Replace smart quotes with standard quotes
-        response_data = json.loads(response_text)  # Convert to dictionary
-
-        # Extract the keywords
-        if "Points" in response_data:
-            keywords_part = response_data["Points"].strip().strip('"')
-            keywords = [keyword.strip() for keyword in keywords_part.split(",")]
-            return ", ".join(keywords) if keywords else "None"
-        else:
-            return "The 'Keywords' key is missing in the response."
-    except json.JSONDecodeError:
-        return "Failed to parse JSON response. Ensure the response is valid JSON."
+        # Remove the "{"Points:"" prefix and the closing "}" if present
+        cleaned_text = response_text.strip().lstrip('{"Points:"').rstrip('}').strip()
+        
+        # Split the text into individual points using '|'
+        points = [point.strip() for point in cleaned_text.split('|') if point.strip()]
+        
+        # Format points with bullets and new lines
+        formatted_points = "\n".join(f"• {point}" for point in points)
+        
+        return formatted_points
     except Exception as e:
         return f"An error occurred: {str(e)}"
-
 
 def create_word_doc(content, filename):
     doc = Document()
