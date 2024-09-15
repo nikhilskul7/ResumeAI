@@ -39,7 +39,9 @@ if "cover_letter_content" not in st.session_state:
     st.session_state.cover_letter_content = ""
 if "questions" not in st.session_state:
     st.session_state.questions = ""
+
 resume = input_pdf_text_static(os.getenv("RESUME_PATH"))
+
 if Analyze:
 
     promptToGetAllTheKeyWords = promptToGetAllTheKeyWords.format(jd=jobDescription)

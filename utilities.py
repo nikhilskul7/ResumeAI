@@ -10,14 +10,8 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_JUSTIFY
 from io import BytesIO
-import subprocess
-import tempfile
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
-import logging
-
-logging.basicConfig(level=logging.DEBUG)
-import requests
 from dotenv import load_dotenv
 
 load_dotenv()
