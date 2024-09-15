@@ -27,7 +27,7 @@ load_dotenv()
 # Streamlit app
 st.title("Smart ATS")
 st.text("Improve Your Resume ATS")
-
+st.markdown("[Overleaf Resume](https://www.overleaf.com/project/64db9dbbb701b20d11a56c23)")
 # Job Description Input
 jobDescription = st.text_area("Paste the Job Description")
 
@@ -139,11 +139,15 @@ questions = st.text_area(
     st.session_state.questions,
     height=100,
 )
+st.session_state.questions = questions
+
+
 if st.button("Answer"):
     if questions:
         question = st.session_state.questions
+
         promptForAnyQuestion = promptForAnyQuestion.format(
-            resume=resume, jd=jobDescription
+            resume=resume, jd=jobDescription, question=question
         )
         responseofQuestion = get_gemini_repsonse(promptForAnyQuestion)
 

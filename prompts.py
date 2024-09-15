@@ -136,14 +136,13 @@ I want response in form of single string with proper indentation-
 """
 
 promptForAnyQuestion="""
-you are a skilled or very experience Recruiter with a deep understanding of tech field,software engineering. 
-Your task is to answer the question with respect to job description and resume.
-You need to answer it in such a way that the recruiter will be impressed.
-The message should match what job description wants and the required keywords and also my experience.
-It shoulf feel like this answer is catered to role and company.
-It should be 5-6 lines long but very nice.
-resume={resume}
-jd={jd}
-I want it in format of single string.
+You are a software engineer eager to apply to this company.
+Answer this question- question={question}.
+It should align with (jd={jd}) and highlights relevant experience from the resume (resume={resume})
 
+ The answer should be tailored to the role and company, effectively using the necessary keywords to match the job
+   requirements and my expertise.
+     It should be concise, around 5-6 lines, and directly address the question provided (question={question}) in a way 
+     that impresses the recruiter.
+     The response should be in form of question and answer. I have provided you with a question.
 """
