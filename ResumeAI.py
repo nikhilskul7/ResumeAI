@@ -11,6 +11,7 @@ from prompts import (
     promptToGenerateRelevantPoints,
     promptForShorterCoverLetter,
     promptForAnyQuestion,
+    promptForSponsorship
 )
 from utilities import (
     input_pdf_text_static,
@@ -19,7 +20,6 @@ from utilities import (
     create_pdf_from_text,
     clean_points_response,
 )
-from latex import latex_resume
 
 # Load environment variables
 load_dotenv()
@@ -73,7 +73,9 @@ if Analyze:
     )
     responseofRelevantPoints = get_gemini_repsonse(promptToGenerateRelevantPoints)
     formatted_response_points = clean_points_response(responseofRelevantPoints)
-
+    promptForSponsorship=promptForSponsorship.format(jd=jobDescription)
+    responseForSponsor=get_gemini_repsonse(promptForSponsorship)
+    
     # Display analysis results
     st.subheader("ATS Keywords Analysis Result")
     st.markdown("**All Possible Keywords**")
@@ -84,6 +86,8 @@ if Analyze:
     st.markdown(formatted_response_importance)
     st.markdown("**Missing Keywords From Resume**")
     st.markdown(formatted_response_missing)
+    st.markdown("**Sponsorship Requirement**")
+    st.markdown(responseForSponsor)
     st.markdown("**Relevant Points for Resume**")
     st.markdown(formatted_response_points)
 

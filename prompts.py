@@ -146,3 +146,16 @@ It should align with (jd={jd}) and highlights relevant experience from the resum
      that impresses the recruiter.
      The response should be in form of question and answer. I have provided you with a question.
 """
+
+promptForSponsorship="""
+Analyze the job description for the following information:
+jd={jd}
+Explicit Visa Sponsorship Statement: Is there a direct statement in the job description regarding H-1B visa sponsorship (e.g., "We do not sponsor H-1B visas")?
+Implicit Indications: Are there requirements that suggest the company might not sponsor H-1B visas (e.g., requiring U.S. citizenship or permanent residency or security clearence required)?
+If no explicit or implicit information is found:
+Do this everytime-
+Conduct a Web Search: Use online resources like h1bgrader, myvisajobs website to find information about their H-1B sponsorship history or policies.
+Provide a Hyperlink: If relevant information is found, provide a hyperlink to the source for verification.
+The response should be in single string and in form with the hyperlink -
+
+"""
