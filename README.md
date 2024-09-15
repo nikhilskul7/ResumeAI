@@ -27,7 +27,7 @@ This web app analyzes job descriptions and tailors your resume and cover letter.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/your-repo-name.git
+  git clone https://github.com/nikhilskul7/ResumeAI.git
    ```
 
 2. Install Python, create a virtual environment, and install dependencies:
