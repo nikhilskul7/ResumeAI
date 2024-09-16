@@ -10,9 +10,10 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_JUSTIFY
 from io import BytesIO
-from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 from dotenv import load_dotenv
+import subprocess
+import os
 
 load_dotenv()
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
@@ -133,3 +134,44 @@ def create_pdf_from_text(text, title="Cover Letter"):
     pdf = buffer.getvalue()
     buffer.close()
     return pdf
+
+def load_latex_code(file_path):
+    with open(file_path, 'r') as file:
+        return file.read()
+    
+def save_latex_code(file_path, code):
+    with open(file_path, 'w') as file:
+        file.write(code)
+
+
+import os
+import subprocess
+
+def latex_to_pdf(latex_file):
+    # Check if the file exists
+    if not os.path.isfile(latex_file):
+        raise FileNotFoundError(f"The file {latex_file} does not exist.")
+
+    # Run pdflatex command
+    try:
+        print("START")
+
+        result = subprocess.run(
+            ['pdflatex', latex_file],  # Use only the file name
+            stdout=subprocess.PIPE,  # Capture output
+            stderr=subprocess.PIPE,  # Capture errors
+            text=True  # Use text mode for output
+        )
+        
+
+        # Check if PDF was created
+        pdf_file = latex_file.replace('.tex', '.pdf')
+        if os.path.isfile(pdf_file):
+            print(f"PDF successfully created: {pdf_file}")
+        else:
+            print("PDF creation failed.")
+    
+    except subprocess.CalledProcessError as e:
+        print(f"Subprocess failed with error: {e}")
+
+

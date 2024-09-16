@@ -19,6 +19,9 @@ from utilities import (
     clean_keywords_response,
     create_pdf_from_text,
     clean_points_response,
+    load_latex_code,
+    save_latex_code,
+    latex_to_pdf
 )
 
 # Load environment variables
@@ -41,6 +44,11 @@ if "questions" not in st.session_state:
     st.session_state.questions = ""
 
 resume = input_pdf_text_static(os.getenv("RESUME_PATH"))
+latex_resume=os.getenv("LATEX_RESUME")
+
+latex_code = load_latex_code(latex_resume)
+edited_code = st.text_area("Edit your resume", latex_code, height=500)
+
 
 if Analyze:
 
@@ -94,6 +102,10 @@ if Analyze:
     st.markdown(responseForSponsor)
     st.markdown("**Relevant Points for Resume**")
     st.markdown(formatted_response_points)
+
+if st.button("Generate Resume"):
+    save_latex_code("temp.tex",edited_code)
+    latex_to_pdf("temp.tex")
 
 generateCoverLetter = st.button("Generate Cover Letter")
 

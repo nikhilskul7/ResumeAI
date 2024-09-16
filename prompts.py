@@ -138,7 +138,7 @@ I want response in form of single string with proper indentation-
 promptForAnyQuestion="""
 You are a software engineer eager to apply to this company.
 Answer this question- question={question}.
-It should align with (jd={jd}) and highlights relevant experience from the resume (resume={resume})
+It should align with (jd={jd}) and highlights relevant experience 
 
  The answer should be tailored to the role and company, effectively using the necessary keywords to match the job
    requirements and my expertise.

@@ -6,4 +6,7 @@ resume.pdf
 venv/
 __pycache__
 latex_resume.tex
+latex_resume.out
+latex_resume.log
+latex_resume.aux
 latex.py
