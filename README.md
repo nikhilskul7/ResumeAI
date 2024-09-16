@@ -16,11 +16,17 @@ This web app analyzes job descriptions and tailors your resume and cover letter.
 4. **Short Cover Letter**: Generate a brief cover letter for applications.
 5. **Ask Any Question**: Get answers to any questions about the job description.
 
+## 🛠️ Tech Stack
+
+- **Frontend**: Streamlit
+- **Backend**: Google Generative AI
+- **File Handling**: PyPDF2, Python-docx, ReportLab
+
 ## 🛠️ Setup
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/your-repo-name.git
+   git clone https://github.com/nikhilskul7/ResumeAI.git
    ```
 
 2. Install Python, create a virtual environment, and install dependencies:
