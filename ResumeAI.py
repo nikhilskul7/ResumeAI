@@ -21,7 +21,8 @@ from utilities import (
     clean_points_response,
     load_latex_code,
     save_latex_code,
-    latex_to_pdf
+    latex_to_pdf,
+    extract_company_name
 )
 
 # Load environment variables
@@ -42,6 +43,8 @@ if "cover_letter_content" not in st.session_state:
     st.session_state.cover_letter_content = ""
 if "questions" not in st.session_state:
     st.session_state.questions = ""
+if "company" not in st.session_state:
+    st.session_state.company = ""
 
 resume = input_pdf_text_static(os.getenv("RESUME_PATH"))
 latex_resume=os.getenv("LATEX_RESUME")
@@ -87,7 +90,7 @@ if Analyze:
 
     promptForSponsorship=promptForSponsorship.format(jd=jobDescription)
     responseForSponsor=get_gemini_repsonse(promptForSponsorship)
-    
+    st.session_state.company =extract_company_name(responseForSponsor)
     # Display analysis results
     st.subheader("ATS Keywords Analysis Result")
     st.markdown("**All Possible Keywords**")
@@ -104,8 +107,14 @@ if Analyze:
     st.markdown(formatted_response_points)
 
 if st.button("Generate Resume"):
-    save_latex_code("temp.tex",edited_code)
-    latex_to_pdf("temp.tex")
+   
+    latex_code_file_name=  f"Nikhil_Kulkarni_Resume_{st.session_state.company}.tex"
+    save_path = os.path.join("resumes", latex_code_file_name)
+
+    
+    save_latex_code(save_path,edited_code)
+    latex_to_pdf(save_path,"resumes/")
+    st.success("Resume PDF downloaded in resumes folder!")
 
 generateCoverLetter = st.button("Generate Cover Letter")
 
@@ -129,18 +138,17 @@ edited_content_cover_letter = st.text_area(
 
 if st.button("Save and Download Cover Letter"):
     try:
+        pdf_filename = f"Nikhil_Kulkarni_Cover_Letter_{st.session_state.company}.pdf"
+
+        save_path = os.path.join("cover_letters", pdf_filename)
         pdf_file = create_pdf_from_text(
-            edited_content_cover_letter, title="Cover Letter Nikhil"
+            edited_content_cover_letter, title="Cover Letter"
         )
+        with open(save_path, "wb") as f:
+                f.write(pdf_file)
+       
 
-        st.download_button(
-            label="Download Cover Letter as PDF",
-            data=pdf_file,
-            file_name="Nikhil_Kulkarni_Cover_Letter.pdf",
-            mime="application/pdf",
-        )
-
-        st.success("Cover letter PDF is ready for download!")
+        st.success("Cover letter PDF downloaded in cover letter folder!")
     except Exception as e:
         st.error(f"An error occurred while creating the PDF: {str(e)}")
 

@@ -144,23 +144,21 @@ def save_latex_code(file_path, code):
         file.write(code)
 
 
-import os
-import subprocess
 
-def latex_to_pdf(latex_file):
+def latex_to_pdf(latex_file,output_dir):
     # Check if the file exists
     if not os.path.isfile(latex_file):
         raise FileNotFoundError(f"The file {latex_file} does not exist.")
+    
 
     # Run pdflatex command
     try:
-        print("START")
 
         result = subprocess.run(
-            ['pdflatex', latex_file],  # Use only the file name
+            ['pdflatex', '-output-directory', output_dir, latex_file],  # Use only the file name
             stdout=subprocess.PIPE,  # Capture output
             stderr=subprocess.PIPE,  # Capture errors
-            text=True  # Use text mode for output
+            text=True 
         )
         
 
@@ -168,10 +166,29 @@ def latex_to_pdf(latex_file):
         pdf_file = latex_file.replace('.tex', '.pdf')
         if os.path.isfile(pdf_file):
             print(f"PDF successfully created: {pdf_file}")
+            cleanup_auxiliary_files(latex_file, output_dir)
         else:
             print("PDF creation failed.")
     
     except subprocess.CalledProcessError as e:
         print(f"Subprocess failed with error: {e}")
 
+def cleanup_auxiliary_files(latex_file, output_dir):
+    """Delete auxiliary files such as .aux, .log, .out."""
+    file_base = os.path.splitext(os.path.basename(latex_file))[0]  # Base name without extension
+    extensions = ['.aux', '.log', '.out', '.toc','.tex']  # Add more extensions if needed
 
+    for ext in extensions:
+        aux_file = os.path.join(output_dir, file_base + ext)
+        if os.path.isfile(aux_file):
+            try:
+                os.remove(aux_file)
+            except Exception as e:
+                print(f"Error deleting {aux_file}: {e}")
+
+def extract_company_name(response):
+    # Split the string by colon and take the first part (company name)
+    if ":" in response:
+        company_name = response.split(":")[0].strip()
+        return company_name
+    return None

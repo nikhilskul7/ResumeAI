@@ -159,6 +159,6 @@ Job description: {jd}
 3. If no clear information, search online resources like h1bgrader or myvisajobs for the company's sponsorship history.
 4. Provide a summary with a hyperlink to any relevant information found.
 
-Response format:
-[Your analysis  in one line with hyperlink if applicable]
+Response format- :
+[ Company_Name: Your analysis  in one line with hyperlink (clickable) if applicable]
 """
