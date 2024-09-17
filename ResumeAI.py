@@ -11,7 +11,7 @@ from prompts import (
     promptToGenerateRelevantPoints,
     promptForShorterCoverLetter,
     promptForAnyQuestion,
-    promptForSponsorship
+    promptForSponsorship,
 )
 from utilities import (
     input_pdf_text_static,
@@ -22,7 +22,7 @@ from utilities import (
     load_latex_code,
     save_latex_code,
     latex_to_pdf,
-    extract_company_name
+    extract_company_name,
 )
 
 # Load environment variables
@@ -31,7 +31,9 @@ load_dotenv()
 # Streamlit app
 st.title("Smart ATS")
 st.text("Improve Your Resume ATS")
-st.markdown("[Overleaf Resume](https://www.overleaf.com/project/64db9dbbb701b20d11a56c23)")
+st.markdown(
+    "[Overleaf Resume](https://www.overleaf.com/project/64db9dbbb701b20d11a56c23)"
+)
 # Job Description Input
 jobDescription = st.text_area("Paste the Job Description")
 
@@ -47,9 +49,20 @@ if "company" not in st.session_state:
     st.session_state.company = ""
 
 resume = input_pdf_text_static(os.getenv("RESUME_PATH"))
-latex_resume=os.getenv("LATEX_RESUME")
+# Button to select which LaTeX file to edit
+latex_files = {
+    'General Resume': os.getenv("LATEX_RESUME_GENERAL"),
+    '.NET Resume': os.getenv("LATEX_RESUME_NET"),
+    'Frontend Resume': os.getenv("LATEX_RESUME_FRONTEND"),
+    'Node Backend Resume': os.getenv("LATEX_RESUME_NODE"),
+    'Java Backend Resume': os.getenv("LATEX_RESUME_JAVA"),
+    'DevOps Backend Resume': os.getenv("LATEX_RESUME_DEVOPS"),
+}
+selected_resume = st.selectbox('Select Resume to Edit:', options=list(latex_files.keys()))
 
-latex_code = load_latex_code(latex_resume)
+# Load the LaTeX code based on the selected file
+latex_resume_path = latex_files[selected_resume]
+latex_code = load_latex_code(latex_resume_path)
 edited_code = st.text_area("Edit your resume", latex_code, height=500)
 
 
@@ -88,9 +101,9 @@ if Analyze:
     responseofRelevantPoints = get_gemini_repsonse(promptToGenerateRelevantPoints)
     formatted_response_points = clean_points_response(responseofRelevantPoints)
 
-    promptForSponsorship=promptForSponsorship.format(jd=jobDescription)
-    responseForSponsor=get_gemini_repsonse(promptForSponsorship)
-    st.session_state.company =extract_company_name(responseForSponsor)
+    promptForSponsorship = promptForSponsorship.format(jd=jobDescription)
+    responseForSponsor = get_gemini_repsonse(promptForSponsorship)
+    st.session_state.company = extract_company_name(responseForSponsor)
     # Display analysis results
     st.subheader("ATS Keywords Analysis Result")
     st.markdown("**All Possible Keywords**")
@@ -107,13 +120,12 @@ if Analyze:
     st.markdown(formatted_response_points)
 
 if st.button("Generate Resume"):
-   
-    latex_code_file_name=  f"Nikhil_Kulkarni_Resume_{st.session_state.company}.tex"
+
+    latex_code_file_name = f"Nikhil_Kulkarni_Resume_{st.session_state.company}.tex"
     save_path = os.path.join("resumes", latex_code_file_name)
 
-    
-    save_latex_code(save_path,edited_code)
-    latex_to_pdf(save_path,"resumes/")
+    save_latex_code(save_path, edited_code)
+    latex_to_pdf(save_path, "resumes/")
     st.success("Resume PDF downloaded in resumes folder!")
 
 generateCoverLetter = st.button("Generate Cover Letter")
@@ -145,8 +157,7 @@ if st.button("Save and Download Cover Letter"):
             edited_content_cover_letter, title="Cover Letter"
         )
         with open(save_path, "wb") as f:
-                f.write(pdf_file)
-       
+            f.write(pdf_file)
 
         st.success("Cover letter PDF downloaded in cover letter folder!")
     except Exception as e:
@@ -155,7 +166,7 @@ if st.button("Save and Download Cover Letter"):
 if st.button("Shorten the cover letter"):
 
     promptForShorterCoverLetter = promptForShorterCoverLetter.format(
-        cover_letter=st.session_state.cover_letter_content,jd=jobDescription
+        cover_letter=st.session_state.cover_letter_content, jd=jobDescription
     )
     responseofMessage = get_gemini_repsonse(promptForShorterCoverLetter)
 
@@ -175,7 +186,7 @@ if st.button("Answer"):
         question = st.session_state.questions
 
         promptForAnyQuestion = promptForAnyQuestion.format(
-             jd=jobDescription, question=question
+            jd=jobDescription, question=question
         )
         responseofQuestion = get_gemini_repsonse(promptForAnyQuestion)
 
