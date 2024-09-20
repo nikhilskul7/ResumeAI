@@ -19,7 +19,6 @@ from utilities import (
     clean_keywords_response,
     create_pdf_from_text,
     clean_points_response,
-    load_latex_code,
     save_latex_code,
     latex_to_pdf,
     extract_company_name,

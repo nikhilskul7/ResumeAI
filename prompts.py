@@ -122,7 +122,7 @@ Your task is to convert this cover letter into message for hiring manager or rec
 The message should match what job description wants and the required keywords.
 cover_letter={cover_letter}
 I want it in format- 
-Hi [Hiring Manager's Name],
+Hi,
 
 I hope you're doing well. I came across the [Position] opening at [Company],
  and I'm really excited about the opportunity to contribute my skills in [briefly mention key expertise].
